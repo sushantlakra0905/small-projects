@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>Stylish Calculator</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  .calculator {
+    background-color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .display {
+    grid-column: span 4;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 2em;
+    padding: 10px;
+    text-align: right;
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  button {
+    background-color: #666;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  button:hover {
+    background-color: #888;
+  }
+
+  .span-two {
+    grid-column: span 2;
+  }
+
+  .span-three {
+    grid-column: span 3;
+  }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+  <input type="text" id="result" class="display" disabled>
+  <button onclick="clearResult()">C</button>
+  <button onclick="appendNumber('7')">7</button>
+  <button onclick="appendNumber('8')">8</button>
+  <button onclick="appendNumber('9')">9</button>
+  <button onclick="appendOperator('+')">+</button>
+  <button onclick="appendNumber('4')">4</button>
+  <button onclick="appendNumber('5')">5</button>
+  <button onclick="appendNumber('6')">6</button>
+  <button onclick="appendOperator('-')">-</button>
+  <button onclick="appendNumber('1')">1</button>
+  <button onclick="appendNumber('2')">2</button>
+  <button onclick="appendNumber('3')">3</button>
+  <button onclick="appendOperator('*')">*</button>
+  <button class="span-two" onclick="appendNumber('0')">0</button>
+  <button onclick="appendDecimal()">.</button>
+  <button onclick="appendOperator('%')">%</button>
+  <button class="span-two" onclick="calculate()">=</button>
+  <button onclick="appendOperator('/')">/</button>
+</div>
+
+<script>
+  let result = document.getElementById('result');
+  let currentNumber = '0';
+  let operator = '';
+  let previousNumber = '0';
+
+  function clearResult() {
+    currentNumber = '0';
+    operator = '';
+    previousNumber = '0';
+    updateResult();
+  }
+
+  function appendNumber(num) {
+    if (currentNumber === '0' && num !== '0') {
+      currentNumber = num;
+    } else {
+      currentNumber += num;
+    }
+    updateResult();
+  }
+
+  function appendDecimal() {
+    if (!currentNumber.includes('.')) {
+      currentNumber += '.';
+      updateResult();
+    }
+  }
+
+  function appendOperator(op) {
+    if (operator !== '') {
+      calculate();
+    }
+    previousNumber = currentNumber;
+    operator = op;
+    currentNumber = '0';
+    updateResult();
+  }
+
+  function calculate() {
+    let resultValue;
+    const num1 = parseFloat(previousNumber);
+    const num2 = parseFloat(currentNumber);
+    switch (operator) {
+      case '+':
+        resultValue = num1 + num2;
+        break;
+      case '-':
+        resultValue = num1 - num2;
+        break;
+      case '*':
+        resultValue = num1 * num2;
+        break;
+      case '/':
+        resultValue = num1 / num2;
+        break;
+      case '%':
+        resultValue = num1 % num2;   
+        break;     
+      default:
+        resultValue = num2;
+    }
+    currentNumber = resultValue.toString();
+    operator = '';
+    previousNumber = '0';
+    updateResult();
+  }
+
+  function updateResult() {
+    result.value = currentNumber;
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #af7da9;
+    border-radius: 5px;
+    background-color: #d6f0af;
+  }
+  
+  input[type="text"], input[type="time"], button {
+    margin-bottom: 10px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul li {
+    margin-bottom: 5px;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+    color: #e61010;
+  }
+  
